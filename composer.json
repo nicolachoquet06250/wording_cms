@@ -1,0 +1,20 @@
+{
+    "name": "nicolas-choquet-2_admin/wording_cms",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Nicolas Choquet",
+            "email": "nicolachoquet06250@gmail.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "slim/slim": "^4.0",
+        "slim/psr7": "^0.6.0",
+        "nyholm/psr7": "^1.2",
+        "nyholm/psr7-server": "^0.4.1",
+        "guzzlehttp/psr7": "^1.6",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "zendframework/zend-diactoros": "^2.2"
+    }
+}
