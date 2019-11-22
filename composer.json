@@ -9,6 +9,7 @@
     ],
     "minimum-stability": "beta",
     "require": {
+	"php-di/slim-bridge": "*",
         "slim/slim": "^4.0",
         "slim/psr7": "^0.6.0",
         "nyholm/psr7": "^1.2",
