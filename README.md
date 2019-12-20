@@ -1,8 +1,11 @@
 # wording_cms
 cms multisite pour un wording dynamique
 
-#use Slim PHP Framework
+# use Slim PHP Framework
 SITE => http://www.slimframework.com
+
+# use bootstrap-material-design
+SITE => https://fezvrasta.github.io/bootstrap-material-design 
 
 # Slim Framework 4 Skeleton Application
 
