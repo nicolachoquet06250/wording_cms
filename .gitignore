@@ -1,5 +1,5 @@
 .idea/
 /coverage/
 /vendor/
-/logs/*
+/logs/app.log
 !/logs/README.md
