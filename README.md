@@ -7,6 +7,9 @@ SITE => http://www.slimframework.com
 # use bootstrap-material-design
 SITE => https://fezvrasta.github.io/bootstrap-material-design 
 
+# install php7.4
+SITE => https://computingforgeeks.com/how-to-install-php-on-ubuntu/
+
 # Slim Framework 4 Skeleton Application
 
 [![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)

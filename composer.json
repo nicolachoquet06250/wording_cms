@@ -47,7 +47,7 @@
         }
     },
     "scripts": {
-        "start": "php -S localhost:8080",
+        "start": "php -S wording.cms.localhost:8080",
         "test": "phpunit"
     }
 }
