@@ -83,7 +83,7 @@ return function (App $app) {
                 <main class="bmd-layout-content pt-3">
                     <div class="container">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-lg-6 offset-lg-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="container">
@@ -123,5 +123,14 @@ HTML;
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
+    });
+
+    $app->group('/user', function(Group $group) {
+        $group->get('/me', function (Request $request, Response $response) {
+            $response->getBody()->write('Hello World !!');
+            return $response;
+        });
+        $group->post('login', '');
+        $group->post('logout', '');
     });
 };

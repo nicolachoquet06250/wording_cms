@@ -6,10 +6,8 @@ namespace Tests\Domain\User;
 use App\Domain\User\User;
 use Tests\TestCase;
 
-class UserTest extends TestCase
-{
-    public function userProvider()
-    {
+class UserTest extends TestCase {
+    public function userProvider() {
         return [
             [1, 'bill.gates', 'Bill', 'Gates'],
             [2, 'steve.jobs', 'Steve', 'Jobs'],
@@ -21,13 +19,12 @@ class UserTest extends TestCase
 
     /**
      * @dataProvider userProvider
-     * @param $id
-     * @param $username
-     * @param $firstName
-     * @param $lastName
+     * @param int $id
+     * @param string $username
+     * @param string $firstName
+     * @param string $lastName
      */
-    public function testGetters($id, $username, $firstName, $lastName)
-    {
+    public function testGetters(int $id, string $username, string $firstName, string $lastName) {
         $user = new User($id, $username, $firstName, $lastName);
 
         $this->assertEquals($id, $user->getId());
@@ -43,8 +40,7 @@ class UserTest extends TestCase
      * @param $firstName
      * @param $lastName
      */
-    public function testJsonSerialize($id, $username, $firstName, $lastName)
-    {
+    public function testJsonSerialize($id, $username, $firstName, $lastName) {
         $user = new User($id, $username, $firstName, $lastName);
 
         $expectedPayload = json_encode([

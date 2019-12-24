@@ -14,14 +14,12 @@ use Slim\Psr7\Headers;
 use Slim\Psr7\Request as SlimRequest;
 use Slim\Psr7\Uri;
 
-class TestCase extends PHPUnit_TestCase
-{
+class TestCase extends PHPUnit_TestCase {
     /**
      * @return App
      * @throws Exception
      */
-    protected function getAppInstance(): App
-    {
+    protected function getAppInstance(): App {
         // Instantiate PHP-DI ContainerBuilder
         $containerBuilder = new ContainerBuilder();
 
@@ -57,21 +55,8 @@ class TestCase extends PHPUnit_TestCase
         return $app;
     }
 
-    /**
-     * @param string $method
-     * @param string $path
-     * @param array  $headers
-     * @param array  $serverParams
-     * @param array  $cookies
-     * @return Request
-     */
-    protected function createRequest(
-        string $method,
-        string $path,
-        array $headers = ['HTTP_ACCEPT' => 'application/json'],
-        array $serverParams = [],
-        array $cookies = []
-    ): Request {
+    protected function createRequest(string $method, string $path, array $headers = ['HTTP_ACCEPT' => 'application/json'],
+                                     array $serverParams = [], array $cookies = []): Request {
         $uri = new Uri('', '', 80, $path);
         $handle = fopen('php://temp', 'w+');
         $stream = (new StreamFactory())->createStreamFromResource($handle);

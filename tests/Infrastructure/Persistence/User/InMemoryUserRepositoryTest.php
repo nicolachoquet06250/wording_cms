@@ -8,10 +8,8 @@ use App\Domain\User\UserNotFoundException;
 use App\Infrastructure\Persistence\User\InMemoryUserRepository;
 use Tests\TestCase;
 
-class InMemoryUserRepositoryTest extends TestCase
-{
-    public function testFindAll()
-    {
+class InMemoryUserRepositoryTest extends TestCase {
+    public function testFindAll() {
         $user = new User(1, 'bill.gates', 'Bill', 'Gates');
 
         $userRepository = new InMemoryUserRepository([1 => $user]);
@@ -19,8 +17,7 @@ class InMemoryUserRepositoryTest extends TestCase
         $this->assertEquals([$user], $userRepository->findAll());
     }
 
-    public function testFindUserOfId()
-    {
+    public function testFindUserOfId() {
         $user = new User(1, 'bill.gates', 'Bill', 'Gates');
 
         $userRepository = new InMemoryUserRepository([1 => $user]);
@@ -31,8 +28,7 @@ class InMemoryUserRepositoryTest extends TestCase
     /**
      * @expectedException \App\Domain\User\UserNotFoundException
      */
-    public function testFindUserOfIdThrowsNotFoundException()
-    {
+    public function testFindUserOfIdThrowsNotFoundException() {
         $userRepository = new InMemoryUserRepository([]);
         $userRepository->findUserOfId(1);
     }

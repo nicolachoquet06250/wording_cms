@@ -9,10 +9,8 @@ use App\Domain\User\User;
 use DI\Container;
 use Tests\TestCase;
 
-class ListUserActionTest extends TestCase
-{
-    public function testAction()
-    {
+class ListUserActionTest extends TestCase {
+    public function testAction() {
         $app = $this->getAppInstance();
 
         /** @var Container $container */

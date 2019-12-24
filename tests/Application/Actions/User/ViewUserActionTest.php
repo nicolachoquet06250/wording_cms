@@ -13,10 +13,8 @@ use DI\Container;
 use Slim\Middleware\ErrorMiddleware;
 use Tests\TestCase;
 
-class ViewUserActionTest extends TestCase
-{
-    public function testAction()
-    {
+class ViewUserActionTest extends TestCase {
+    public function testAction() {
         $app = $this->getAppInstance();
 
         /** @var Container $container */
@@ -42,8 +40,7 @@ class ViewUserActionTest extends TestCase
         $this->assertEquals($serializedPayload, $payload);
     }
 
-    public function testActionThrowsUserNotFoundException()
-    {
+    public function testActionThrowsUserNotFoundException() {
         $app = $this->getAppInstance();
 
         $callableResolver = $app->getCallableResolver();

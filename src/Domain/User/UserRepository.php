@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
-interface UserRepository
-{
+interface UserRepository {
     /**
      * @return User[]
      */
-    public function findAll(): array;
+    public function findAll();
 
     /**
      * @param int $id
