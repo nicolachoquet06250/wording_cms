@@ -6,7 +6,6 @@ use Monolog\Logger;
 
 return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
-    var_dump(getenv('DATABASE'));
     $containerBuilder->addDefinitions([
         'settings' => [
             'displayErrorDetails' => true, // Should be set to false in production
