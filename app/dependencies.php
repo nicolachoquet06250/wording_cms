@@ -16,13 +16,22 @@ return function (ContainerBuilder $containerBuilder) {
             $loggerSettings = $settings['logger'];
             $logger = new Logger($loggerSettings['name']);
 
-            $processor = new UidProcessor();
-            $logger->pushProcessor($processor);
+            $logger->pushProcessor(new UidProcessor());
 
             $handler = new StreamHandler($loggerSettings['path'], $loggerSettings['level']);
             $logger->pushHandler($handler);
 
             return $logger;
+        },
+        PDO::class => function(ContainerInterface $c) {
+            $settings = $c->get('settings');
+
+            $databaseSettings = $settings['database'];
+            return new PDO(
+                "{$databaseSettings['wording_cms']['driver']}:dbname={$databaseSettings['wording_cms']['database']};host={$databaseSettings['wording_cms']['host']};port={$databaseSettings['wording_cms']['port']}",
+                $databaseSettings['wording_cms']['username'],
+                $databaseSettings['wording_cms']['password']
+            );
         },
     ]);
 };

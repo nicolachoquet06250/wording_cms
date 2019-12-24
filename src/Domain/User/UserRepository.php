@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
+use PDO;
+
 interface UserRepository {
+
+    public function __construct(PDO $db);
+
     /**
      * @return User[]
      */

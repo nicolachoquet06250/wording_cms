@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use App\Application\Handlers\HttpErrorHandler;
 use App\Application\Handlers\ShutdownHandler;
+use App\Application\PersoEnvVars;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
@@ -17,6 +18,8 @@ $containerBuilder = new ContainerBuilder();
 if (false) { // Should be set to true in production
 	$containerBuilder->enableCompilation(__DIR__ . '/var/cache');
 }
+
+PersoEnvVars::init();
 
 // Set up settings
 $settings = require __DIR__ . '/app/settings.php';

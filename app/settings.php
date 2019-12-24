@@ -6,6 +6,7 @@ use Monolog\Logger;
 
 return function (ContainerBuilder $containerBuilder) {
     // Global Settings Object
+    var_dump(getenv('DATABASE'));
     $containerBuilder->addDefinitions([
         'settings' => [
             'displayErrorDetails' => true, // Should be set to false in production
@@ -14,6 +15,7 @@ return function (ContainerBuilder $containerBuilder) {
                 'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
                 'level' => Logger::DEBUG,
             ],
+            'database' => json_decode(getenv('DATABASE'), true),
         ],
     ]);
 };
