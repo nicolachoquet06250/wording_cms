@@ -20,8 +20,9 @@ if (false) { // Should be set to true in production
 
 // set up all personal env variables
 $addPersonalEnvVars = require __DIR__ . '/app/personalEnvVars.php';
-var_dump(file_exists("/home/{$_ENV['USER']}/environment"), file_exists("/home/{$_ENV['USER']}/.bashrc"));
-$addPersonalEnvVars('/etc/environment', "/home/{$_ENV['USER']}/environment", "/home/{$_ENV['USER']}/.bashrc", "/home/{$_ENV['USER']}/.bash_profile", "/home/{$_ENV['USER']}/.profile");
+$current_user = get_current_user();
+var_dump(file_exists("/home/{$current_user}/environment"), file_exists("/home/{$current_user}/.bashrc"));
+$addPersonalEnvVars('/etc/environment', "/home/{$current_user}/environment", "/home/{$current_user}/.bashrc", "/home/{$current_user}/.bash_profile", "/home/{$current_user}/.profile");
 
 // Set up settings
 $settings = require __DIR__ . '/app/settings.php';
