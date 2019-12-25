@@ -56,7 +56,6 @@ class InMemoryUserRepository implements UserRepository {
 
 	public function findByIdentAndPassword( string $ident, string $password, ?string $errorMessage = null): User {
 		foreach ( $this->users as $user ) {
-			file_put_contents(__DIR__.'/test.txt', $user->getPassword().' '.sha1($password)."\n");
 			if($user->getIdent() === $ident && $user->getPassword() === sha1($password)) {
 				return $user;
 			}
