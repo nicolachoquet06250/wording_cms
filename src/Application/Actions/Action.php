@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions;
 
+use App\Application\Interfaces\Session;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -17,10 +18,13 @@ abstract class Action {
 
     protected Response $response;
 
+	protected Session $session;
+
     protected array $args;
 
-    public function __construct(LoggerInterface $logger) {
+    public function __construct(LoggerInterface $logger, Session $session) {
         $this->logger = $logger;
+        $this->session = $session;
     }
 
     /**

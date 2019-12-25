@@ -32,6 +32,11 @@
                     }).then(r => r.json()).then(json => {
                         console.log(json);
                     });
+                    fetch('/user/me', {
+                        method: 'get'
+                    }).then(r => r.json()).then(json => {
+                        console.log(json);
+                    });
                 });
             });
         </script>

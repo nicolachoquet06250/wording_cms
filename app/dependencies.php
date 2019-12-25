@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Application\Interfaces\Session;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -33,5 +34,8 @@ return function (ContainerBuilder $containerBuilder) {
                 $databaseSettings['wording_cms']['password']
             );
         },
+	    Session::class => function(ContainerInterface $c) {
+    	    return \App\Application\Dependencies\Session::getInstance();
+	    }
     ]);
 };

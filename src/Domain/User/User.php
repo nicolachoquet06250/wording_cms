@@ -45,7 +45,7 @@ class User implements JsonSerializable {
         return $this->ident;
     }
 
-    public function getPassword(): string {
+    public function getPassword(): ?string {
         return $this->password;
     }
 

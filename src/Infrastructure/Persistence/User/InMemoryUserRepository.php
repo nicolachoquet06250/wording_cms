@@ -19,10 +19,10 @@ class InMemoryUserRepository implements UserRepository {
 
     public function __construct(PDO $db) {
         $this->db = $db;
-        $query = $this->db->query('SELECT `id`, `first_name`, `last_name`, `ident`, `email` FROM `user`');
+        $query = $this->db->query('SELECT `id`, `first_name`, `last_name`, `ident`, `email`, `password` FROM `user`');
         $res = $query->fetchAll(PDO::FETCH_ASSOC);
         foreach ($res as $key => $line) {
-            $this->users[$key+1] = new User((int) $line['id'], $line['first_name'], $line['last_name'], $line['ident'], $line['email']);
+            $this->users[$key+1] = new User((int) $line['id'], $line['first_name'], $line['last_name'], $line['ident'], $line['email'], $line['password']);
         }
     }
 
@@ -52,5 +52,18 @@ class InMemoryUserRepository implements UserRepository {
         }
 
         return $this->users[$id];
+    }
+
+	public function findByIdentAndPassword( string $ident, string $password, ?string $errorMessage = null): User {
+		foreach ( $this->users as $user ) {
+			file_put_contents(__DIR__.'/test.txt', $user->getPassword().' '.sha1($password)."\n");
+			if($user->getIdent() === $ident && $user->getPassword() === sha1($password)) {
+				return $user;
+			}
+    	}
+		if(is_null($errorMessage)) {
+			throw new UserNotFoundException();
+		}
+		throw new UserNotFoundException($errorMessage);
     }
 }
