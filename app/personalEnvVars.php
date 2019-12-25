@@ -13,7 +13,6 @@ function add_env_vars_in_file($envfile) {
     $envfile_content_parsed = str_replace(["\r", "\n\r", "\r\n"], "\n", $envfile_content);
     $envfile_content_parsed = explode("\n", $envfile_content_parsed);
     foreach ($envfile_content_parsed as $key => $line) {
-    	var_dump(str_replace(["'", 'export '], "", $line));
         putenv(str_replace(["'", 'export '], "", $line));
     }
 }
