@@ -65,4 +65,19 @@ class InMemoryUserRepository implements UserRepository {
 		}
 		throw new UserNotFoundException($errorMessage);
     }
+
+    public function add(User $user): ?int {
+        $query = $this->db->prepare("INSERT INTO `user` (first_name, last_name, ident, password, email) 
+    VALUES (:first_name, :last_name, :ident, :password, :email)", PDO::PARAM_STR);
+
+        $result = $query->execute([
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
+            'ident' => $user->getIdent(),
+            'password' => $user->getPassword(),
+            'email' => $user->getEmail(),
+        ]);
+
+        return $result ? (int) $this->db->lastInsertId() : null;
+    }
 }

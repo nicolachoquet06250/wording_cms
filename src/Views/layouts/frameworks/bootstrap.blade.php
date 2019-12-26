@@ -16,35 +16,3 @@
     <link href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" rel="stylesheet"/>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"></script>
 @endsection
-
-@section('custom_css')
-    <link rel="stylesheet" href="/public/css/styles.css" />
-@endsection
-
-@section('custom_js')
-    <script src="/public/js/init_bootstrap_material_design.js"></script>
-    <script src="/public/js/unloaders.js"></script>
-    <script src="/public/js/loaders.js"></script>
-    <script src="/public/js/observers.js"></script>
-    <script>
-        $(window).ready(() => {
-            $('form[action="/user/login"]').on('submit', e => {
-                e.preventDefault();
-                fetch($(e.target).attr('action'), {
-                    method: $(e.target).attr('method'),
-                    body: JSON.stringify({
-                        ident: $('#ident').val(),
-                        password: $('#password').val()
-                    })
-                }).then(r => r.json()).then(json => {
-                    console.log(json);
-                });
-                fetch('/user/me', {
-                    method: 'get'
-                }).then(r => r.json()).then(json => {
-                    console.log(json);
-                });
-            });
-        });
-    </script>
-@endsection

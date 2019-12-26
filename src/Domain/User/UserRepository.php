@@ -31,4 +31,11 @@ interface UserRepository {
 	 * @throws UserNotFoundException
 	 */
 	public function findByIdentAndPassword( string $ident, string $sha1, ?string $errorMessage = null): User;
+
+    /**
+     * @param User $user
+     *
+     * @return int|null
+     */
+	public function add(User $user): ?int;
 }

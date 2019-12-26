@@ -5,6 +5,7 @@ namespace App\Application\Interfaces;
 
 
 interface Session extends Singleton {
+    public static function getInstance(): Session;
 	public function initWithId();
 	public function getValue(string $key);
 	public function setValue(string $key, $value);

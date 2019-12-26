@@ -9,7 +9,7 @@
     <script src="/public/js/unloaders.js"></script>
     <script src="/public/js/loaders.js"></script>
     <script src="/public/js/observers.js"></script>
-    <script>$(window).ready(() => observers.init_menu(observers.CONNECTION));</script>
+    <script>$(window).ready(() => observers.init_menu(observers.INSCRIPTION));</script>
 @endsection
 
 @section('body')
@@ -28,15 +28,27 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-12">
-                                            <h2>Connection</h2>
+                                            <h2>Inscription</h2>
                                         </div>
                                     </div>
                                 </div>
                                 <form class="container" action="/user/login" METHOD="post">
                                     <div class="form-row">
                                         <div class="form-group col-12">
+                                            <label for="first_name">Prénom</label>
+                                            <input type="text" class="form-control" id="first_name" placeholder="Prénom" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
+                                            <label for="last_name">Nom</label>
+                                            <input type="text" class="form-control" id="last_name" placeholder="Nom" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
                                             <label for="ident">Identifiant</label>
-                                            <input type="text" class="form-control" id="ident" placeholder="Identifiant" />
+                                            <input type="text" class="form-control" id="ident" placeholder="Identifiant" disabled />
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -47,7 +59,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-12">
-                                            <button type="submit" class="btn btn-primary">Me connecter</button>
+                                            <button type="submit" class="btn btn-primary">M'inscrire</button>
                                         </div>
                                     </div>
                                 </form>

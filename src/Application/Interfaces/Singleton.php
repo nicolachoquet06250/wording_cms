@@ -5,5 +5,5 @@ namespace App\Application\Interfaces;
 
 
 interface Singleton {
-	public static function getInstance(): self;
+	public static function getInstance(): Singleton;
 }

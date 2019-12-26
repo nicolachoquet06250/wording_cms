@@ -11,9 +11,11 @@ use Psr\Http\Message\ResponseInterface as Response;
 class GetMyselfAction extends Action {
     protected function action(): Response {
     	if($this->session->has('user')) {
-		    return $this->respondWithData($this->session->getValue('user'));
+		    return $this->respondWithData([
+		        'user' => $this->session->getValue('user')
+            ]);
 	    } else {
-		    throw new UserNotFoundException();
+		    throw new UserNotFoundException('Vous n\'êtes pas connecté !');
 	    }
     }
 }

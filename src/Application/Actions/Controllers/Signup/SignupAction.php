@@ -1,38 +1,36 @@
 <?php
 
 
-namespace App\Application\Actions\Controllers\Account;
+namespace App\Application\Actions\Controllers\Signup;
 
 
 use App\Application\Actions\Action;
 use Illuminate\View\Factory;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class AccountAction extends Action {
-
+class SignupAction extends Action {
     protected function action(): Response {
         /** @var Factory $template */
         $template = $this->request->getAttribute('template')->view();
-        $view = $template->make('account');
+        $view = $template->make('signup');
         $menu_items = [
             [
                 'title' => 'Home',
                 'href' => '/'
             ],
             [
-                'title' => 'Mon compte',
-                'href' => '/me',
+                'title' => 'Inscription',
+                'href' => '/signup',
                 'selected' => true
             ],
+            [
+                'title' => 'Connection',
+                'href' => '/login'
+            ]
         ];
-        if($this->login->check()) {
-            $menu_items[] = [
-                'title' => 'Déconnection',
-                'href' => 'javascript:observers.init_menu(observers.DECONNECTION)'
-            ];
-        }
+
         $view->with('menu_items', $menu_items);
-        $view->with('user', $this->login->getUser());
+        $view->with('isLogged', $this->login->check());
         $this->response->getBody()->write($view->render());
         return $this->response;
     }
