@@ -10,13 +10,14 @@ use Psr\Http\Server\MiddlewareInterface as Middleware;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 class TemplateMiddleware implements MiddleWare {
+    private static ?Blade $templateInstance = null;
 
     public function process(Request $request, RequestHandler $handler): Response {
+        if(is_null(self::$templateInstance)) {
+            self::$templateInstance = new Blade(__DIR__.'/../../Views', __DIR__.'/../../../var/cache/views');
+        }
         return $handler->handle(
-            $request->withAttribute(
-                'template',
-                new Blade(__DIR__.'/../../Views', __DIR__.'/../../../var/cache/views')
-            )
+            $request->withAttribute('template', self::$templateInstance)
         );
     }
 }

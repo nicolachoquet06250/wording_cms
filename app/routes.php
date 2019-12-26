@@ -1,26 +1,27 @@
 <?php
 declare(strict_types=1);
 
-use App\Application\Actions\Controllers\Root\RootAction;
-use App\Application\Actions\Controllers\User\GetMyselfAction;
-use App\Application\Actions\Controllers\User\LoginAction;
-use App\Application\Actions\Controllers\User\LogoutAction;
-use App\Application\Actions\Controllers\User\ListUsersAction;
-use App\Application\Actions\Controllers\User\ViewUserAction;
+use App\Application\Actions\Controllers\Account\AccountAction as Account;
+use App\Application\Actions\Controllers\Root\RootAction as Root;
+use App\Application\Actions\Controllers\Login\LoginAction as Login;
+use App\Application\Actions\Controllers\User\GetMyselfAction as GetMyselfAPI;
+use App\Application\Actions\Controllers\User\LoginAction as LoginAPI;
+use App\Application\Actions\Controllers\User\LogoutAction as LogoutAPI;
+use App\Application\Actions\Controllers\User\ListUsersAction as ListUsersAPI;
+use App\Application\Actions\Controllers\User\ViewUserAction as ViewUserAPI;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
-    $app->get('/', RootAction::class);
+    $app->get('/', Root::class);
+    $app->get('/login', Login::class);
+    $app->get('/me', Account::class);
 
-    $app->get('/me', RootAction::class); // temporary class
-
-    $app->get('/users', ListUsersAction::class);
-
+    $app->get('/users', ListUsersAPI::class);
     $app->group('/user', function(Group $group) {
-        $group->get('/me', GetMyselfAction::class);
-	    $group->get('/logout', LogoutAction::class);
-	    $group->post('/login', LoginAction::class);
-        $group->get('/{id}', ViewUserAction::class);
+        $group->get('/me', GetMyselfAPI::class);
+	    $group->get('/logout', LogoutAPI::class);
+	    $group->post('/login', LoginAPI::class);
+        $group->get('/{id}', ViewUserAPI::class);
     });
 };
