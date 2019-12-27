@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 
 use App\Application\Actions\Controllers\Account\AccountAction as Account;
+use App\Application\Actions\Controllers\Project\MyProjectsAction as MyProjects;
 use App\Application\Actions\Controllers\Root\RootAction as Root;
 use App\Application\Actions\Controllers\Login\LoginAction as Login;
 use App\Application\Actions\Controllers\Signup\SignupAction as Signup;
@@ -33,7 +34,7 @@ return function (App $app) {
 
     $app->group('/project', function (Group $group) {
         $group->get('/{id:'.PARAM_INT.'}', fn() => null)->setName('project_api');
-        $group->get('s', fn() => null)->setName('project_list_api');
+        $group->get('s', MyProjects::class)->setName('get_projects');
         $group->post('', AddProjectAPI::class)->setName('add_project_api');
     });
 

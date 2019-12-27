@@ -4,13 +4,15 @@ let observers = {
     CONNECTION: 'LOGIN',
     DECONNECTION: 'LOGOUT',
     ACCOUNT: 'ACCOUNT',
+    PROJECTS: 'PROJECTS',
 
     menus: [
         'HOME',
         'INSCRIPTION',
         'LOGIN',
         'LOGOUT',
-        'ACCOUNT'
+        'ACCOUNT',
+        'PROJECTS'
     ],
     _menu_: null,
     set menu(menu) {

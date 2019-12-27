@@ -1,30 +1,29 @@
 <?php
 
 
-namespace App\Application\Actions\Controllers\Root;
+namespace App\Application\Actions\Controllers\Project;
 
 
-use App\Application\Actions\Action;
-use Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\View\Factory;
+use Psr\Http\Message\ResponseInterface as Response;
 
-class RootAction extends Action {
+class MyProjectsAction extends ProjectAction {
     protected function action(): Response {
         /** @var Factory $template */
         $template = $this->request->getAttribute('template')->view();
-        $view = $template->make('index');
+        $view = $template->make('projects');
         $menu_items = [
             [
                 'title' => 'Home',
-                'href' => '/',
+                'href' => '/'
+            ],
+            [
+                'title' => 'Mes projets',
+                'href' => '/projects',
                 'selected' => true
             ]
         ];
         if($this->login->check()) {
-            $menu_items[] = [
-                'title' => 'Mes projets',
-                'href' => '/projects'
-            ];
             $menu_items[] = [
                 'title' => 'Mon compte',
                 'href' => '/me'
@@ -44,7 +43,8 @@ class RootAction extends Action {
             ];
         }
         $view->with('menu_items', $menu_items);
-        $view->with('route_user_api', $this->router()->fullUrlFor($this->uri(), 'user_api', ['id' => '1']));
+        $view->with('isLogged', $this->login->check());
+        $view->with('projects', $this->projectRepository->findAll());
         $this->response->getBody()->write($view->render());
         return $this->response;
     }

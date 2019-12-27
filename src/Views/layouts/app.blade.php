@@ -10,5 +10,6 @@
     </head>
     <body>
         @yield('body')
+        @yield('modals')
     </body>
 </html>

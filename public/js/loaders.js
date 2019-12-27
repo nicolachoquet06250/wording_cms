@@ -14,6 +14,9 @@ contents.load_LOGOUT_content = () => {
 contents.load_ACCOUNT_content = () => {
     console.log('load_ACCOUNT_content');
 };
+contents.load_PROJECTS_content = () => {
+    console.log('load_PROJECTS_content');
+};
 
 window.scripts = window.scripts || {};
 scripts.load_HOME_scripts = () => {
@@ -34,20 +37,6 @@ scripts.load_HOME_scripts = () => {
             console.log(json);
         });
     });
-    fetch('/project', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: 'Mon projet',
-            default_language_code: 'fr',
-            default_language_name: 'Français'
-        })
-    }).then(r => r.json())
-        .then(json => {
-            console.log(json);
-        });
 };
 scripts.load_INSCRIPTION_scripts = () => {
     fetch('/user/me', {
@@ -153,6 +142,38 @@ scripts.load_ACCOUNT_scripts = () => {
         )
     );
 };
+scripts.load_PROJECTS_scripts = () => {
+    $('.add-project-save').on('click', () => {
+        $('form[action="/project"]').submit();
+    });
+
+    $('form[action="/project"]').on('submit', e => {
+        e.preventDefault();
+        let $form = $(e.target);
+        fetch($form.attr('action'), {
+            method: $form.attr('method'),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: $('#name').val(),
+                default_language_code: $('#default_language_code').val(),
+                default_language_name: $('#default_language_name').val()
+            })
+        }).then(r => r.json())
+            .then(json => {
+                let $alert = $('.alert');
+                if(json.data !== undefined) {
+                    $alert.addClass('d-none');
+                    window.location.reload();
+                } else {
+                    $('#exampleModal').trigger('close');
+                    $alert.html(json.error.description);
+                    $alert.removeClass('d-none');
+                }
+            });
+    });
+};
 
 window.styles = window.styles || {};
 styles.load_HOME_styles = () => {
@@ -169,4 +190,7 @@ styles.load_LOGOUT_styles = () => {
 };
 styles.load_ACCOUNT_styles = () => {
     console.log('load_ACCOUNT_styles');
+};
+styles.load_PROJECTS_styles = () => {
+    console.log('load_PROJECTS_styles');
 };
