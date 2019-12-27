@@ -20,6 +20,10 @@ class AccountAction extends Action {
                 'href' => '/'
             ],
             [
+                'title' => 'Mes projets',
+                'href' => '/projects'
+            ],
+            [
                 'title' => 'Mon compte',
                 'href' => '/me',
                 'selected' => true
