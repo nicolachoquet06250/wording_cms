@@ -56,7 +56,7 @@
                                                             <small>{{$project->getDefaultLanguage()}}</small>
                                                         </div>
                                                         <div class="mb-1">
-                                                            <button class="btn btn-primary">Supprimer</button>
+                                                            <button class="btn btn-primary remove-project" data-id="{{$project->getId()}}">Supprimer</button>
                                                             <button class="btn btn-primary">Modifier</button>
                                                         </div>
                                                     </a>

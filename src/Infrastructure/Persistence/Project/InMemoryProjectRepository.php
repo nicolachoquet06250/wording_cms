@@ -146,4 +146,29 @@ class InMemoryProjectRepository implements ProjectRepository {
         }
         return null;
     }
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function deleteFromId(int $id): bool {
+        $query = $this->db->query("SELECT `id` FROM `language` WHERE `project_id`={$id}");
+        foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $line) {
+            $query = $this->db->query("SELECT `id` FROM `page` WHERE `language_id`={$line['id']}");
+            foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $line) {
+                $this->db->prepare("DELETE FROM `property` WHERE `page_id`={$line['id']}")->execute();
+            }
+            $this->db->prepare("DELETE FROM `page` WHERE `language_id`={$line['id']}")->execute();
+        }
+        $this->db->prepare("DELETE FROM `language` WHERE `project_id`={$id}")->execute();
+        $this->db->prepare("DELETE FROM `project` WHERE `id`={$id}")->execute();
+
+        $this->rebuild();
+
+        if(isset($this->projects[$id])) {
+            return false;
+        }
+        return true;
+    }
 }

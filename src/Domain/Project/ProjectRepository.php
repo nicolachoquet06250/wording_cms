@@ -45,4 +45,11 @@ interface ProjectRepository {
      * @return int|null
      */
     public function add(Project $project): ?int;
+
+    /**
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function deleteFromId(int $id): bool;
 }

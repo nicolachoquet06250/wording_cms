@@ -173,6 +173,32 @@ scripts.load_PROJECTS_scripts = () => {
                 }
             });
     });
+
+    $('.remove-project').on('click', e => {
+        let $button = $(e.target);
+        fetch('/project', {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: parseInt($button.data('id'))
+            })
+        }).then(r => r.json())
+            .then(json => {
+                if(json.data !== undefined) {
+                    let $alert = $('.alert');
+                    if(json.data.success) {
+                        $alert.addClass('d-none');
+                        window.location.reload();
+                    } else {
+                        $('#exampleModal').trigger('close');
+                        $alert.html(json.data.error.description);
+                        $alert.removeClass('d-none');
+                    }
+                }
+            });
+    });
 };
 
 window.styles = window.styles || {};

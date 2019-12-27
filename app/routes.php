@@ -14,6 +14,7 @@ use App\Application\Actions\Controllers\User\LogoutAction as LogoutAPI;
 use App\Application\Actions\Controllers\User\ListUsersAction as ListUsersAPI;
 use App\Application\Actions\Controllers\User\ViewUserAction as ViewUserAPI;
 use App\Application\Actions\Controllers\Project\AddProjectAction as AddProjectAPI;
+use App\Application\Actions\Controllers\Project\RemoveProjectAction as DeleteProjectAPI;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
@@ -36,6 +37,7 @@ return function (App $app) {
         $group->get('/{id:'.PARAM_INT.'}', fn() => null)->setName('project_api');
         $group->get('s', MyProjects::class)->setName('get_projects');
         $group->post('', AddProjectAPI::class)->setName('add_project_api');
+        $group->delete('', DeleteProjectAPI::class)->setName('delete_project_api');
     });
 
     $app->get('/{project:'.PARAM_STR.'}/{lang:'.PARAM_STR.'}/{page:'.PARAM_STR.'}.json', fn() => null)->setName('page_json');
