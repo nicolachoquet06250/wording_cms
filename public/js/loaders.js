@@ -100,16 +100,24 @@ scripts.load_LOGIN_scripts = () => {
             })
         }).then(r => r.json())
             .then(json => {
-                if(json.data.user !== undefined) {
-                    fetch($(e.target).attr('action'), {
-                        method: $(e.target).attr('method'),
-                        body: JSON.stringify({
-                            ident: $('#ident').val(),
-                            password: $('#password').val()
-                        })
-                    }).then(r => r.json())
-                        .then(json => window.location.href = json.data.redirect)
-                } else if (json.data.redirect !== undefined) window.location.href = json.data.redirect;
+                let $alert = $('.alert');
+                if(json.data !== undefined) {
+                    if(!$alert.hasClass('d-none')) $alert.addClass('d-none');
+
+                    if (json.data.user !== undefined) {
+                        fetch($(e.target).attr('action'), {
+                            method: $(e.target).attr('method'),
+                            body: JSON.stringify({
+                                ident: $('#ident').val(),
+                                password: $('#password').val()
+                            })
+                        }).then(r => r.json())
+                            .then(json => window.location.href = json.data.redirect)
+                    } else if (json.data.redirect !== undefined) window.location.href = json.data.redirect;
+                } else if(json.error !== undefined) {
+                    $alert.html(json.error.description);
+                    $alert.removeClass('d-none');
+                }
             });
     });
 };

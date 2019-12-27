@@ -23,6 +23,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-6 offset-lg-3">
+                        <div class="alert alert-danger d-none" role="alert"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6 offset-lg-3">
                         <div class="card">
                             <div class="card-body">
                                 <div class="container">
