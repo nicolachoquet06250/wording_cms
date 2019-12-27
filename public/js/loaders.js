@@ -37,6 +37,41 @@ scripts.load_HOME_scripts = () => {
     console.log('load_HOME_scripts');
 };
 scripts.load_INSCRIPTION_scripts = () => {
+    fetch('/user/me', {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(r => r.json())
+        .then(json => {
+            if(json.data !== undefined && json.data.user !== undefined) window.location.href = '/';
+        });
+
+    $('form[action="/user/signup"]').on('submit', e => {
+        e.preventDefault();
+        let $form = $(e.target);
+        fetch($form.attr('action'), {
+            method: $form.attr('method'),
+            body: JSON.stringify({
+                first_name: $('#first_name').val(),
+                last_name: $('#last_name').val(),
+                email: $('#email').val(),
+                ident: $('#ident').val(),
+                password: $('#password').val()
+            })
+        }).then(r => r.json())
+            .then(json => {
+                let $alert = $('.alert');
+                if(json.data !== undefined && json.data.user !== undefined) {
+                    $alert.addClass('d-none');
+                    window.location.href = '/login';
+                } else {
+                    $alert.html(json.error.description);
+                    $alert.removeClass('d-none');
+                }
+            });
+    });
+
     $('#first_name, #last_name').each((_, elem) =>
         $(elem).on('keyup', () =>
             $('#ident').val(`${$('#first_name').val().toLowerCase()}.${$('#last_name').val().toLowerCase()}`)
@@ -56,8 +91,9 @@ scripts.load_LOGIN_scripts = () => {
 
     $('form[action="/user/login"]').on('submit', e => {
         e.preventDefault();
-        fetch($(e.target).attr('action'), {
-            method: $(e.target).attr('method'),
+        let $form = $(e.target);
+        fetch($form.attr('action'), {
+            method: $form.attr('method'),
             body: JSON.stringify({
                 ident: $('#ident').val(),
                 password: $('#password').val()

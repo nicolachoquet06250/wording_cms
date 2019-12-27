@@ -23,6 +23,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-lg-6 offset-lg-3">
+                        <div class="alert alert-danger d-none" role="alert"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg-6 offset-lg-3">
                         <div class="card">
                             <div class="card-body">
                                 <div class="container">
@@ -32,7 +37,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <form class="container" action="/user/login" METHOD="post">
+                                <form class="container" action="/user/signup" METHOD="post">
                                     <div class="form-row">
                                         <div class="form-group col-12">
                                             <label for="first_name">Prénom</label>
@@ -43,6 +48,12 @@
                                         <div class="form-group col-12">
                                             <label for="last_name">Nom</label>
                                             <input type="text" class="form-control" id="last_name" placeholder="Nom" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" placeholder="Email" />
                                         </div>
                                     </div>
                                     <div class="form-row">

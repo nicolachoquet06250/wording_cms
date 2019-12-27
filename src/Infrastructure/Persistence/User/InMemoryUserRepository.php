@@ -19,11 +19,7 @@ class InMemoryUserRepository implements UserRepository {
 
     public function __construct(PDO $db) {
         $this->db = $db;
-        $query = $this->db->query('SELECT `id`, `first_name`, `last_name`, `ident`, `email`, `password` FROM `user`');
-        $res = $query->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($res as $key => $line) {
-            $this->users[$key+1] = new User((int) $line['id'], $line['first_name'], $line['last_name'], $line['ident'], $line['email'], $line['password']);
-        }
+        $this->rebuild();
     }
 
     public function setFalseUsers(): InMemoryUserRepository {
@@ -42,24 +38,45 @@ class InMemoryUserRepository implements UserRepository {
         return $this;
     }
 
+    private function rebuild() {
+        $query = $this->db->query('SELECT `id`, `first_name`, `last_name`, `ident`, `email`, `password` FROM `user`');
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($res as $key => $line) {
+            $this->users[$line['id']] = new User((int) $line['id'], $line['first_name'], $line['last_name'], $line['ident'], $line['email'], $line['password']);
+        }
+    }
+
     public function findAll(): array {
         return array_values($this->users);
     }
 
     public function findUserOfId(int $id): User {
         if (!isset($this->users[$id])) {
-            throw new UserNotFoundException();
+            $this->rebuild();
+            if(!isset($this->users[$id])) {
+                throw new UserNotFoundException();
+            }
         }
 
         return $this->users[$id];
     }
 
 	public function findByIdentAndPassword( string $ident, string $password, ?string $errorMessage = null): User {
-		foreach ( $this->users as $user ) {
-			if($user->getIdent() === $ident && $user->getPassword() === sha1($password)) {
-				return $user;
-			}
-    	}
+        function findUser($users, $ident, $password): ?User {
+            foreach ($users as $user) {
+                if($user->getIdent() === $ident && $user->getPassword() === sha1($password)) {
+                    return $user;
+                }
+            }
+            return null;
+        }
+
+        $user = findUser($this->users, $ident, $password);
+        if(is_null($user)) {
+            $this->rebuild();
+            $user = findUser($this->users, $ident, $password);
+            if(!is_null($user)) return $user;
+        } else return $user;
 		if(is_null($errorMessage)) {
 			throw new UserNotFoundException();
 		}
@@ -68,15 +85,8 @@ class InMemoryUserRepository implements UserRepository {
 
     public function add(User $user): ?int {
         $query = $this->db->prepare("INSERT INTO `user` (first_name, last_name, ident, password, email) 
-    VALUES (:first_name, :last_name, :ident, :password, :email)", PDO::PARAM_STR);
-
-        $result = $query->execute([
-            'first_name' => $user->getFirstName(),
-            'last_name' => $user->getLastName(),
-            'ident' => $user->getIdent(),
-            'password' => $user->getPassword(),
-            'email' => $user->getEmail(),
-        ]);
+    VALUES ('{$user->getFirstName()}', '{$user->getLastName()}', '{$user->getIdent()}', '{$user->getPassword()}', '{$user->getEmail()}')");
+        $result = $query->execute();
 
         return $result ? (int) $this->db->lastInsertId() : null;
     }
