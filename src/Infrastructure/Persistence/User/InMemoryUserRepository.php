@@ -13,7 +13,7 @@ class InMemoryUserRepository implements UserRepository {
     /**
      * @var User[]
      */
-    private $users = [];
+    private array $users = [];
 
     private PDO $db;
 
@@ -41,7 +41,7 @@ class InMemoryUserRepository implements UserRepository {
     private function rebuild() {
         $query = $this->db->query('SELECT `id`, `first_name`, `last_name`, `ident`, `email`, `password` FROM `user`');
         $res = $query->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($res as $key => $line) {
+        foreach ($res as $line) {
             $this->users[$line['id']] = new User((int) $line['id'], $line['first_name'], $line['last_name'], $line['ident'], $line['email'], $line['password']);
         }
     }

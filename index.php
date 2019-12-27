@@ -8,6 +8,8 @@ use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
+const PARAM_INT = '[0-9]+';
+const PARAM_STR = '[^\/]+';
 
 require __DIR__ . '/vendor/autoload.php';
 

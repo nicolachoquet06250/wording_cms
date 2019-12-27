@@ -24,10 +24,6 @@ let observers = {
         return this._menu_;
     },
     onMenuChange(newMenu, oldMenu) {
-        if(oldMenu !== null && window.menus[`unload_${oldMenu}_menu`] !== undefined) {
-            window.menus[`unload_${oldMenu}_menu`]();
-        }
-        window.menus[`load_${newMenu}_menu`]();
         if(oldMenu !== null && window.contents[`unload_${oldMenu}_content`] !== undefined) {
             window.contents[`unload_${oldMenu}_content`]();
         }

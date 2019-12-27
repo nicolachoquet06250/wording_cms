@@ -8,9 +8,11 @@ use App\Application\Interfaces\Session;
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Routing\RouteParser;
 
 abstract class Action {
     protected LoggerInterface $logger;
@@ -94,5 +96,22 @@ abstract class Action {
         $json = json_encode($payload, JSON_PRETTY_PRINT);
         $this->response->getBody()->write($json);
         return $this->response->withHeader('Content-Type', 'application/json');
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return mixed
+     */
+    protected function get(string $id) {
+        return $this->request->getAttribute($id);
+    }
+
+    protected function router(): RouteParser {
+        return $this->get('router');
+    }
+
+    protected function uri(): UriInterface {
+        return $this->get('uri');
     }
 }

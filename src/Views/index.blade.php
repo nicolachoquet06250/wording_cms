@@ -9,27 +9,7 @@
     <script src="/public/js/unloaders.js"></script>
     <script src="/public/js/loaders.js"></script>
     <script src="/public/js/observers.js"></script>
-    <script>
-        $(window).ready(() => {
-            $('form[action="/user/login"]').on('submit', e => {
-                e.preventDefault();
-                fetch($(e.target).attr('action'), {
-                    method: $(e.target).attr('method'),
-                    body: JSON.stringify({
-                        ident: $('#ident').val(),
-                        password: $('#password').val()
-                    })
-                }).then(r => r.json()).then(json => {
-                    console.log(json);
-                });
-                fetch('/user/me', {
-                    method: 'get'
-                }).then(r => r.json()).then(json => {
-                    console.log(json);
-                });
-            });
-        });
-    </script>
+    <script>$(window).ready(() => observers.init_menu(observers.HOME));</script>
 @endsection
 
 @section('body')

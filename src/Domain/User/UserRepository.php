@@ -12,7 +12,7 @@ interface UserRepository {
     /**
      * @return User[]
      */
-    public function findAll();
+    public function findAll(): array ;
 
     /**
      * @param int $id

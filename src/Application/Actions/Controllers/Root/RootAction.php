@@ -40,6 +40,7 @@ class RootAction extends Action {
             ];
         }
         $view->with('menu_items', $menu_items);
+        $view->with('route_user_api', $this->router()->fullUrlFor($this->uri(), 'user_api', ['id' => '1']));
         $this->response->getBody()->write($view->render());
         return $this->response;
     }

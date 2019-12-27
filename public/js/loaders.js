@@ -1,20 +1,3 @@
-window.menus = window.menus || {};
-menus.load_HOME_menu = () => {
-    console.log('load_HOME_menu');
-};
-menus.load_INSCRIPTION_menu = () => {
-    console.log('load_INSCRIPTION_menu');
-};
-menus.load_LOGIN_menu = () => {
-    console.log('load_LOGIN_menu');
-};
-menus.load_LOGOUT_menu = () => {
-    console.log('load_LOGOUT_menu');
-};
-menus.load_ACCOUNT_menu = () => {
-    console.log('load_ACCOUNT_menu');
-};
-
 window.contents = window.contents || {};
 contents.load_HOME_content = () => {
     console.log('load_HOME_content');
@@ -34,7 +17,37 @@ contents.load_ACCOUNT_content = () => {
 
 window.scripts = window.scripts || {};
 scripts.load_HOME_scripts = () => {
-    console.log('load_HOME_scripts');
+    $('form[action="/user/login"]').on('submit', e => {
+        e.preventDefault();
+        fetch($(e.target).attr('action'), {
+            method: $(e.target).attr('method'),
+            body: JSON.stringify({
+                ident: $('#ident').val(),
+                password: $('#password').val()
+            })
+        }).then(r => r.json()).then(json => {
+            console.log(json);
+        });
+        fetch('/user/me', {
+            method: 'get'
+        }).then(r => r.json()).then(json => {
+            console.log(json);
+        });
+    });
+    fetch('/project', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: 'Mon projet',
+            default_language_code: 'fr',
+            default_language_name: 'Français'
+        })
+    }).then(r => r.json())
+        .then(json => {
+            console.log(json);
+        });
 };
 scripts.load_INSCRIPTION_scripts = () => {
     fetch('/user/me', {

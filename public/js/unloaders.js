@@ -1,20 +1,3 @@
-window.menus = window.menus || {};
-menus.unload_HOME_menu = () => {
-    console.log('unload_HOME_menu');
-};
-menus.unload_INSCRIPTION_menu = () => {
-    console.log('unload_INSCRIPTION_menu');
-};
-menus.unload_LOGIN_menu = () => {
-    console.log('unload_LOGIN_menu');
-};
-menus.unload_ACCOUNT_menu = () => {
-    console.log('unload_ACCOUNT_menu');
-};
-menus.unload_LOGOUT_menu = () => {
-    console.log('unload_LOGOUT_menu');
-};
-
 window.contents = window.contents || {};
 contents.unload_HOME_content = () => {
     console.log('unload_HOME_content');
