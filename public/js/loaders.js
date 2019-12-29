@@ -1,22 +1,10 @@
 window.contents = window.contents || {};
-contents.load_HOME_content = () => {
-    console.log('load_HOME_content');
-};
-contents.load_INSCRIPTION_content = () => {
-    console.log('load_INSCRIPTION_content');
-};
-contents.load_LOGIN_content = () => {
-    console.log('load_LOGIN_content');
-};
-contents.load_LOGOUT_content = () => {
-    console.log('load_LOGOUT_content');
-};
-contents.load_ACCOUNT_content = () => {
-    console.log('load_ACCOUNT_content');
-};
-contents.load_PROJECTS_content = () => {
-    console.log('load_PROJECTS_content');
-};
+contents.load_HOME_content = () => console.log('load_HOME_content');
+contents.load_INSCRIPTION_content = () => console.log('load_INSCRIPTION_content');
+contents.load_LOGIN_content = () => console.log('load_LOGIN_content');
+contents.load_LOGOUT_content = () => console.log('load_LOGOUT_content');
+contents.load_ACCOUNT_content = () => console.log('load_ACCOUNT_content');
+contents.load_PROJECTS_content = () => console.log('load_PROJECTS_content');
 
 window.scripts = window.scripts || {};
 scripts.load_HOME_scripts = () => {
@@ -272,21 +260,9 @@ scripts.load_PROJECTS_scripts = () => {
 };
 
 window.styles = window.styles || {};
-styles.load_HOME_styles = () => {
-    console.log('load_HOME_styles');
-};
-styles.load_INSCRIPTION_styles = () => {
-    console.log('load_INSCRIPTION_styles');
-};
-styles.load_LOGIN_styles = () => {
-    console.log('load_LOGIN_styles');
-};
-styles.load_LOGOUT_styles = () => {
-    console.log('load_LOGOUT_styles');
-};
-styles.load_ACCOUNT_styles = () => {
-    console.log('load_ACCOUNT_styles');
-};
-styles.load_PROJECTS_styles = () => {
-    console.log('load_PROJECTS_styles');
-};
+styles.load_HOME_styles = () => console.log('load_HOME_styles');
+styles.load_INSCRIPTION_styles = () => console.log('load_INSCRIPTION_styles');
+styles.load_LOGIN_styles = () => console.log('load_LOGIN_styles');
+styles.load_LOGOUT_styles = () => console.log('load_LOGOUT_styles');
+styles.load_ACCOUNT_styles = () => console.log('load_ACCOUNT_styles');
+styles.load_PROJECTS_styles = () => console.log('load_PROJECTS_styles');
