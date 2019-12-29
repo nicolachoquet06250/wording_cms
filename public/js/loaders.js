@@ -286,6 +286,7 @@ scripts.load_PROJECTS_scripts = () => {
     </a>
 </li>`;
                 $('#project-details-label').html(name);
+                $('#languages').html('');
                 for(let id in languages) {
                     let language = languages[id];
                     $('#languages').html($('#languages').html() + language_tpl
@@ -296,15 +297,18 @@ scripts.load_PROJECTS_scripts = () => {
                 $('.choose-language').on('click', e => {
                     let $lang = $(e.target);
                     let lang = $lang.data('lang');
+                    $('#pages').html('');
                     for(let id in languages) {
                         let language = languages[id];
                         if(language.code === lang) {
                             for(let _id in language.pages) {
                                 let page = language.pages[_id];
+                                let properties_length = 0;
+                                for(let i in page.properties) properties_length++;
                                 $('#pages').html($('#pages').html() + page_tpl
                                     .replace('{name}', page.name)
                                     .replace('{page}', page.id)
-                                    .replace('{property_nb}', page.properties.length));
+                                    .replace('{property_nb}', properties_length.toString()));
                             }
                             break;
                         }
@@ -322,8 +326,20 @@ scripts.load_PROJECTS_scripts = () => {
                                         let properties = page.properties;
                                         for(let i in properties) {
                                             $('#page-properties').html($('#page-properties').html() + `<tr>
-                                        <td>${properties[i].key}</td>
-                                        <td>${properties[i].value}</td>
+                                        <td>
+    <div class="form-group col-12">
+        <label for="property-key" style="margin-left: 15px;">Clé de propriété</label>
+        <input  type="text" class="form-control" id="property-key" placeholder="Clé de propriété" 
+                value="${properties[i].key}" />
+    </div>
+</td>
+                                        <td>
+    <div class="form-group col-12">
+        <label for="property-value" style="margin-left: 15px;">Valeur de propriété</label>
+        <input  type="text" class="form-control" id="property-value" placeholder="Valeur de propriété" 
+                value="${properties[i].value}" />
+    </div>
+</td>
                                     </tr>`);
                                         }
                                         break;
