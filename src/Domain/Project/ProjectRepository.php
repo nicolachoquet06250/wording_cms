@@ -52,4 +52,12 @@ interface ProjectRepository {
      * @return bool
      */
     public function deleteFromId(int $id): bool;
+
+	/**
+	 * @param int $id
+	 * @param Project $param
+	 *
+	 * @return Project|null
+	 */
+	public function updateProject(int $id, Project $param): ?Project;
 }

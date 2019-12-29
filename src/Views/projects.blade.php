@@ -56,8 +56,12 @@
                                                             <small>{{$project->getDefaultLanguage()}}</small>
                                                         </div>
                                                         <div class="mb-1">
-                                                            <button class="btn btn-primary remove-project" data-id="{{$project->getId()}}">Supprimer</button>
-                                                            <button class="btn btn-primary">Modifier</button>
+                                                            <button class="btn btn-primary remove-project"
+                                                                    data-id="{{$project->getId()}}">Supprimer</button>
+                                                            <button class="btn btn-primary update-project"
+                                                                    data-id="{{$project->getId()}}"
+                                                                    data-toggle="modal"
+                                                                    data-target="#update-project">Modifier</button>
                                                         </div>
                                                     </a>
                                                 @endforeach
@@ -67,8 +71,10 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Créer un projet</button>
-                                <button class="btn btn-primary">Vider</button>
+                                <button class="btn btn-primary"
+                                        data-toggle="modal"
+                                        data-target="#create-project">Créer un projet</button>
+                                <button class="btn btn-primary remove-projects">Vider</button>
                             </div>
                         </div>
                     </div>
@@ -79,11 +85,11 @@
 @endsection
 
 @section('modals')
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="create-project" tabindex="-1" role="dialog" aria-labelledby="create-project-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Créer un projet</h5>
+                    <h5 class="modal-title" id="create-project-label">Créer un projet</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -113,6 +119,46 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
                     <button type="button" class="btn btn-primary add-project-save">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="update-project" tabindex="-1" role="dialog" aria-labelledby="update-project-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="create-project-label">Modifier un projet</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="container" action="/project" method="put">
+                        <input type="hidden" id="id" />
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="to-update-name">Nom du projet</label>
+                                <input type="text" class="form-control" id="to-update-name" placeholder="Nom du projet" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="to-update-default_language_code">Code de la langue par default</label>
+                                <input type="text" class="form-control" id="to-update-default_language_code" placeholder="Code de la langue par default" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="to-update-default_language_name">Nom de la langue par default</label>
+                                <input type="text" class="form-control" id="to-update-default_language_name" placeholder="Nom de la langue par default" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary update-project-save">Enregistrer</button>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ class InMemoryProjectRepository implements ProjectRepository {
     }
 
     private function rebuild() {
+    	$this->projects = [];
         $project_query = $this->db->query('SELECT `id`, `name`, `default_language`, `default_language_name` FROM `project`');
         foreach ($project_query->fetchAll(PDO::FETCH_ASSOC) as $project) {
             $languages_query = $this->db->query("SELECT `id`, `code`, `project_id`, `name` FROM `language` WHERE `project_id`={$project['id']}");
@@ -53,6 +54,7 @@ class InMemoryProjectRepository implements ProjectRepository {
      * @return Project[]
      */
     public function findAll(): array {
+    	$this->rebuild();
         return $this->projects;
     }
 
@@ -102,6 +104,9 @@ class InMemoryProjectRepository implements ProjectRepository {
                     break;
                 }
             }
+        }
+        if(count($projects) === 0) {
+	        throw new ProjectNotFoundException();
         }
         return $projects;
     }
@@ -170,5 +175,25 @@ class InMemoryProjectRepository implements ProjectRepository {
             return false;
         }
         return true;
+    }
+
+	/**
+	 * @param int $id
+	 * @param Project $project
+	 *
+	 * @return Project|null
+	 * @throws ProjectNotFoundException
+	 */
+    public function updateProject(int $id, Project $project): ?Project {
+	    $result = $this->db->prepare("UPDATE `project` 
+	SET `name`='{$project->getName()}',
+		`default_language`='{$project->getDefaultLanguage()}',
+		`default_language_name`='{$project->getDefaultLanguageName()}'
+	WHERE `id`={$id}")->execute();
+	    if($result) {
+	    	$this->rebuild();
+	    	return $this->findById($id);
+	    }
+	    return null;
     }
 }

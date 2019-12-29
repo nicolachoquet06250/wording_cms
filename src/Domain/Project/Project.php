@@ -64,7 +64,8 @@ class Project implements JsonSerializable {
             'id' => $this->getId(),
             'name' => $this->getName(),
             'languages' => $this->getLanguages(),
-            'default_language' => $this->getDefaultLanguage()
+            'default_language' => $this->getDefaultLanguage(),
+	        'default_language_name' => $this->getDefaultLanguageName(),
         ];
     }
 }

@@ -144,10 +144,14 @@ scripts.load_ACCOUNT_scripts = () => {
 };
 scripts.load_PROJECTS_scripts = () => {
     $('.add-project-save').on('click', () => {
-        $('form[action="/project"]').submit();
+        $('form[action="/project"][method="post"]').submit();
     });
 
-    $('form[action="/project"]').on('submit', e => {
+    $('.update-project-save').on('click', () => {
+        $('form[action="/project"][method="put"]').submit();
+    });
+
+    $('form[action="/project"][method="post"]').on('submit', e => {
         e.preventDefault();
         let $form = $(e.target);
         fetch($form.attr('action'), {
@@ -171,6 +175,53 @@ scripts.load_PROJECTS_scripts = () => {
                     $alert.html(json.error.description);
                     $alert.removeClass('d-none');
                 }
+            });
+    });
+
+    $('form[action="/project"][method="put"]').on('submit', e => {
+        e.preventDefault();
+        let $form = $(e.target);
+        fetch($form.attr('action'), {
+            method: $form.attr('method'),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: $('#id').val(),
+                name: $('#to-update-name').val(),
+                language_code: $('#to-update-default_language_code').val(),
+                language_name: $('#to-update-default_language_name').val()
+            })
+        }).then(r => r.json())
+            .then(json => {
+                if(json.data !== undefined) {
+                    let $alert = $('.alert');
+                    if(json.data.success) {
+                        $alert.addClass('d-none');
+                        window.location.reload();
+                    } else {
+                        $('#exampleModal').trigger('close');
+                        $alert.html(json.data.error.description);
+                        $alert.removeClass('d-none');
+                    }
+                }
+            });
+    });
+
+    $('.update-project').on('click', e => {
+        let $button = $(e.target);
+        let id = $button.data('id');
+
+        fetch(`/project/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json())
+            .then(json => {
+                $('#id').val(id);
+                $('#to-update-name').val(json.data.project.name);
+                $('#to-update-default_language_code').val(json.data.project.default_language);
+                $('#to-update-default_language_name').val(json.data.project.default_language_name);
             });
     });
 
@@ -198,6 +249,25 @@ scripts.load_PROJECTS_scripts = () => {
                     }
                 }
             });
+    });
+
+    $('.remove-projects').on('click', () => {
+        fetch('/projects', {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json()).then(json => {
+            let $alert = $('.alert');
+            if(json.data !== undefined && json.data.success) {
+                $alert.addClass('d-none');
+                window.location.reload();
+            } else {
+                $('#exampleModal').trigger('close');
+                $alert.html(json.data.error.description);
+                $alert.removeClass('d-none');
+            }
+        })
     });
 };
 
