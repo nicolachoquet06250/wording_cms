@@ -257,6 +257,86 @@ scripts.load_PROJECTS_scripts = () => {
             }
         })
     });
+
+    $('.project-details').on('click', e => {
+        let $button = $(e.target);
+        if(e.target.tagName !== 'A')
+            $button = $($button.parent('div').parent('a'));
+        let id = $button.data('id');
+
+        fetch(`/project/${id}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(r => r.json())
+            .then(json => {
+                let project = json.data.project;
+                let name = project.name;
+                let languages = project.languages;
+                let language_tpl = `<li class="list-group-item list-group-item-action flex-column align-items-start">
+    <a href="#/" class="choose-language" data-lang="{code}">
+        {name}
+        <span class="badge badge-primary badge-pill">{code}</span>
+    </a>
+</li>`;
+                let page_tpl = `<li class="list-group-item list-group-item-action flex-column align-items-start">
+    <a href="#/" class="choose-page" data-page="{page}">
+        {name}
+        <span class="badge badge-primary badge-pill">{property_nb}</span>
+    </a>
+</li>`;
+                $('#project-details-label').html(name);
+                for(let id in languages) {
+                    let language = languages[id];
+                    $('#languages').html($('#languages').html() + language_tpl
+                        .replace(/\{code\}/g, language.code)
+                        .replace('{name}', language.name));
+                }
+
+                $('.choose-language').on('click', e => {
+                    let $lang = $(e.target);
+                    let lang = $lang.data('lang');
+                    for(let id in languages) {
+                        let language = languages[id];
+                        if(language.code === lang) {
+                            for(let _id in language.pages) {
+                                let page = language.pages[_id];
+                                $('#pages').html($('#pages').html() + page_tpl
+                                    .replace('{name}', page.name)
+                                    .replace('{page}', page.id)
+                                    .replace('{property_nb}', page.properties.length));
+                            }
+                            break;
+                        }
+                    }
+
+                    $('.choose-page').on('click', e => {
+                        let $page = $(e.target);
+                        let page_id = parseInt($page.data('page'));
+                        for(let id in languages) {
+                            let language = languages[id];
+                            if(language.code === lang) {
+                                for(let _id in language.pages) {
+                                    if(parseInt(_id) === page_id) {
+                                        let page = language.pages[_id];
+                                        let properties = page.properties;
+                                        for(let i in properties) {
+                                            $('#page-properties').html($('#page-properties').html() + `<tr>
+                                        <td>${properties[i].key}</td>
+                                        <td>${properties[i].value}</td>
+                                    </tr>`);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        $('#properties-tab').click();
+                    });
+                    $('#pages-tab').click();
+                });
+            });
+    })
 };
 
 window.styles = window.styles || {};

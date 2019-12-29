@@ -50,11 +50,15 @@
                                                     </a>
                                                 @endif
                                                 @foreach($projects as $project)
-                                                    <a class="list-group-item list-group-item-action flex-column align-items-start" href="#">
-                                                        <div class="d-flex w-100 justify-content-between">
-                                                            <h5 class="mb-1 ml-3">{{$project->getName()}}</h5>
-                                                            <small>{{$project->getDefaultLanguage()}}</small>
-                                                        </div>
+                                                    <a class="list-group-item list-group-item-action flex-column align-items-start project-details"
+                                                       href="#/">
+                                                        <a class="list-group-item list-group-item-action flex-column align-items-start project-details"
+                                                           href="#project-details" data-toggle="modal" data-id="{{$project->getId()}}">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="mb-1 ml-3">{{$project->getName()}}</h5>
+                                                                <small>{{$project->getDefaultLanguage()}}</small>
+                                                            </div>
+                                                        </a>
                                                         <div class="mb-1">
                                                             <button class="btn btn-primary remove-project"
                                                                     data-id="{{$project->getId()}}">Supprimer</button>
@@ -155,6 +159,77 @@
                             </div>
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary update-project-save">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="project-details" tabindex="-1" role="dialog" aria-labelledby="project-details-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="project-details-label"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="language-tab" data-toggle="tab" href="#languages"
+                               role="tab" aria-controls="languages" aria-selected="true">Languages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pages-tab" data-toggle="tab" href="#pages"
+                               role="tab" aria-controls="pages" aria-selected="false">Pages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="properties-tab" data-toggle="tab" href="#properties"
+                               role="tab" aria-controls="properties" aria-selected="false">Propriétées</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="languages"
+                             role="tabpanel" aria-labelledby="language-tab">
+                            <ul class="list-group"></ul>
+                        </div>
+                        <div class="tab-pane fade" id="pages"
+                             role="tabpanel" aria-labelledby="pages-tab">
+                            <ul class="list-group"></ul>
+                        </div>
+                        <div class="tab-pane fade" id="properties"
+                             role="tabpanel" aria-labelledby="properties-tab">
+                            <table class="table table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th>Clé</th>
+                                        <th>Valeur</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="page-properties"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group col-12">
+                                                <label for="property-key" style="margin-left: 15px;">Clé de propriété</label>
+                                                <input type="text" class="form-control" id="property-key" placeholder="Clé de propriété" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group col-12">
+                                                <label for="property-value" style="margin-left: 15px;">valeur de propriété</label>
+                                                <input type="text" class="form-control" id="property-value" placeholder="valeur de propriété" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
